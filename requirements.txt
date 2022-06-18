@@ -3,6 +3,7 @@ Flask-Caching
 numpy
 pandas
 plotly
+scipy
 dash
 dash_bootstrap_components
 dash_extensions
