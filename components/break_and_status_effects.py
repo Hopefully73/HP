@@ -21,9 +21,9 @@ effect_div = html.Div(
         dcc.Dropdown(
             id="effect-dropdown",
             options=[
-                {"label": "Armor Break", "value": "Armor"},
-                {"label": "Weapon Break", "value": "Weapon"},
-                {"label": "Status Effect", "value": "Status"}
+                {"label": "Armor Break", "value": "armor"},
+                {"label": "Weapon Break", "value": "weapon"},
+                {"label": "Status Effect", "value": "status"}
             ],
             persistence=True,
             persistence_type="memory",
@@ -169,10 +169,7 @@ layout = dbc.Container(
                 dcc.Markdown("""TBD""", id = "effect-final-result")
             ],
             style = {"textAlign": "center"}
-        ),
-        html.Br(),
-        html.Br(),
-        html.Br()
+        )
     ],
     className="div-for-sidebar"
 )
