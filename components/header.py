@@ -121,7 +121,7 @@ def dungeon_options(dungeon):
     
     if dungeon == "dungeon1":
         options1 = [
-            {"label": "+10% disease chance", "value": 10},
+            {"label": "+10% disease chance", "value": "disease"},
             {"label": "+20% monster damage", "value": 20},
             {"label": "+15% hero damage", "value": 15}
         ]
@@ -132,7 +132,7 @@ def dungeon_options(dungeon):
         ]
     elif dungeon == "dungeon1.5":
         options1 = [
-            {"label": "+25% disease chance", "value": 25},
+            {"label": "+25% disease chance", "value": "disease"},
             {"label": "+20% monster damage", "value": 20},
             {"label": "+20% hero damage", "value": 20}
         ]
@@ -143,36 +143,36 @@ def dungeon_options(dungeon):
         ]
     elif dungeon == "dungeon2":
         options1 = [
-            {"label": "+20% bone fracture chance", "value": 20},
+            {"label": "+20% bone fracture chance", "value": "bone"},
             {"label": "+20% monster damage", "value": 20},
             {"label": "+15% hero damage", "value": 15}
         ]
         options2 = [
-            {"label": "+30% disease chance", "value": 30},
+            {"label": "+30% disease chance", "value": "disease"},
             {"label": "+25% stone monster damage", "value": 25},
             {"label": "-20% monster damage", "value": -20}
         ]
     elif dungeon == "dungeon3":
         options1 = [
-            {"label": "+25% burn chance", "value": 25},
+            {"label": "+25% burn chance", "value": "burn"},
             {"label": "+20% monster damage", "value": 20},
             {"label": "+15% hero damage", "value": 15}
         ]
         options2 = [
-            {"label": "+35% bone fracture chance", "value": 35},
+            {"label": "+35% bone fracture chance", "value": "bone"},
             {"label": "+25% fire monster damage", "value": 25},
             {"label": "-20% monster damage", "value": -20}
         ]
     elif dungeon == "dungeon4":
         options1 = [
-            {"label": "+25% disease chance for monster farm monsters", "value": 25},
-            {"label": "+25% bone fracture chance for monster farm monsters", "value": 25},
+            {"label": "+25% disease chance for monster farm monsters", "value": "disease"},
+            {"label": "+25% bone fracture chance for monster farm monsters", "value": "bone"},
             {"label": "+20% monster damage", "value": 20},
             {"label": "+15% hero damage", "value": 15},
             
         ]
         options2 = [
-            {"label": "+40% burn chance", "value": 40},
+            {"label": "+40% burn chance", "value": "burn"},
             {"label": "+30% monster farm monster damage", "value": 30},
             {"label": "-20% monster damage", "value": -20}
         ]
