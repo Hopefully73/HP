@@ -105,7 +105,8 @@ improved_div = html.Div(
         ),
         dbc.Tooltip(
             "Alfred's undead monsters, Rocko's hardened golem, and DSiL's mighty dragon",
-            target="tooltip-target"
+            target="tooltip-target",
+            placement="top"
         ),
         dbc.RadioItems(
             options=[
