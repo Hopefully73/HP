@@ -92,7 +92,21 @@ monster_div = html.Div(
 
 improved_div = html.Div(
     [
-        html.H6("Use improved monsters?"),
+        html.H6(
+            [
+                "Use ", 
+                html.Span(
+                    "improved",
+                    id="tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"}
+                ),
+                " monsters?"
+            ]
+        ),
+        dbc.Tooltip(
+            "Alfred's undead monsters, Rocko's hardened golem, and DSiL's mighty dragon",
+            target="tooltip-target"
+        ),
         dbc.RadioItems(
             options=[
                 {"label": "Yes", "value": 50},
@@ -112,11 +126,11 @@ prod_special_div = html.Div(
         html.H6("Select additional status effect chance(s)"),
         dbc.Checklist(
             options=[
-                {"label": "+10% (2nd special)", "value": 10},
-                {"label": "+10% (3rd special)", "value": 10},
-                {"label": "+10% (4th special)", "value": 10},
+                {"label": "+10% (2nd special)", "value": "prod1"},
+                {"label": "+10% (3rd special)", "value": "prod2"},
+                {"label": "+10% (4th special)", "value": "prod3"},
             ],
-            value=[10, 10, 10],
+            value=["prod1", "prod2", "prod3"],
             id="prod-special-checklist",
             inline=True,
             persistence=True,
@@ -208,11 +222,16 @@ def show_armor(effect):
         Output("prod-special-div", "style"),
         Output("improved-div", "style")
     ],
-    Input("effect-dropdown", "value")
+    [
+        Input("effect-dropdown", "value"),
+        Input("monster-radio", "value")
+    ]
 )
-def show_others(effect):
-    if effect == "status":
+def show_others(effect, monster):
+    if effect == "status" and monster != "regular":
         return [{'display': 'block'}, {'display': 'block'}, {'display': 'block'}]
+    elif effect == "status" and monster == "regular":
+        return [{'display': 'block'}, {'display': 'none'}, {'display': 'none'}]
     else:
         return [{'display': 'none'}, {'display': 'none'}, {'display': 'none'}]
     
@@ -247,8 +266,7 @@ def update_chance(nclicks, effect, armor, weapon, monster, improved,
                 "Dungeon": dungeon,
                 "Effect category": effect,
                 "2nd dungeon special": special1,
-                "4th dungeon special": special2,
-                "5th dungeon special": special3
+                "4th dungeon special": special2
             }
         
         if None in list(inputs.values()):
@@ -302,8 +320,70 @@ def update_chance(nclicks, effect, armor, weapon, monster, improved,
             \nRound 2: {:.2f}%\n
             \nRound 3: {:.2f}%""".format(r1 * 100, r2 * 100, max * 100))
             
-        else:    
-            return dcc.Markdown("""TBD""")
+        else:   
+            x = 0.12 # base chance of inflicting status effects
+            if len(prod) == 3:
+                total_prod = 1.3
+            elif len(prod) == 2:
+                total_prod = 1.2
+            elif len(prod) == 1:
+                total_prod = 1.1
+            else:
+                total_prod = 1
+            
+            if monster == "fire":
+                status = "Burn"
+                if dungeon == "dungeon3" and special1 == "burn":
+                    y = 1.25
+                elif dungeon == "dungeon4" and special2 == "burn":
+                    y = 1.4
+                else:
+                    y = 1
+                base = x * ((improved + 100) / 100) * total_prod * y
+                
+            elif monster == "stone":
+                status = "Bone fracture"
+                if dungeon == "dungeon2" and special1 == "bone":
+                    y = 1.2
+                elif dungeon == "dungeon3" and special2 == "bone":
+                    y = 1.35
+                else:
+                    y = 1
+                base = x * ((improved + 100) / 100) * total_prod * y
+                
+            elif monster == "undead":
+                status = "Disease"
+                if dungeon == "dungeon1" and special1 == "disease":
+                    y = 1.1
+                elif dungeon == "dungeon1.5" and special1 == "disease":
+                    y = 1.25
+                elif dungeon == "dungeon2" and special2 == "disease":
+                    y = 1.3
+                else:
+                    y = 1
+                base = x * ((improved + 100) / 100) * total_prod * y
+                
+            else:
+                if dungeon == "dungeon4" and special1 == "disease":
+                    base = 0.07
+                    status = "Disease"
+                elif dungeon == "dungeon4" and special1 == "bone":
+                    base = 0.07
+                    status = "Bone fracture"
+                else:
+                    base = 0
+                    status = "Status effect"
+                    
+            r1 = 1 - (1 - base)
+            r2 = 1 - ((1 - base) ** 2)
+            r3 = 1 - ((1 - base) ** 3)
+            r4 = 1 - ((1 - base) ** 4)    
+            
+            return dcc.Markdown("""{} chance per round:\n
+            \nRound 1: {:.2f}%\n
+            \nRound 2: {:.2f}%\n
+            \nRound 3: {:.2f}%\n
+            \nRound 4: {:.2f}%""".format(status, r1 * 100, r2 * 100, r3 * 100, r4 * 100))
         
     else:
         raise PreventUpdate
