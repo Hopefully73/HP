@@ -43,7 +43,7 @@ tabs_div = html.Div(
                     selected_className="custom-tab--selected",
                 ),
                 dcc.Tab(
-                    label="Monster & Hero Stats",
+                    label="Hero & Monster Stats",
                     value="tab-3",
                     className="custom-tab",
                     selected_className="custom-tab--selected",
