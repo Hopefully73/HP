@@ -28,7 +28,7 @@ dungeon_div = html.Div(
             options=[
                 {"label": "Old Dungeon", "value": "dungeon1"},
                 {"label": "Ice Fortress", "value": "dungeon1.5"},
-                {"label": "Graveyard", "value": "dungeon2"},
+                {"label": "Cursed Crypt", "value": "dungeon2"},
                 {"label": "Demonic Castle", "value": "dungeon3"},
                 {"label": "Dark Palace", "value": "dungeon4"}
             ],
@@ -122,8 +122,8 @@ def dungeon_options(dungeon):
     if dungeon == "dungeon1":
         options1 = [
             {"label": "+10% disease chance", "value": "disease"},
-            {"label": "+20% monster damage", "value": 20},
-            {"label": "+15% hero damage", "value": 15}
+            {"label": "+20% monster damage", "value": "monster"},
+            {"label": "+15% hero damage", "value": "hero"}
         ]
         options2 = [
             {"label": "+25% monster farm monster damage", "value": 25},
@@ -133,8 +133,8 @@ def dungeon_options(dungeon):
     elif dungeon == "dungeon1.5":
         options1 = [
             {"label": "+25% disease chance", "value": "disease"},
-            {"label": "+20% monster damage", "value": 20},
-            {"label": "+20% hero damage", "value": 20}
+            {"label": "+20% monster damage", "value": "monster"},
+            {"label": "+20% hero damage", "value": "hero"}
         ]
         options2 = [
             {"label": "+30% monster farm monster damage", "value": 30},
@@ -144,8 +144,8 @@ def dungeon_options(dungeon):
     elif dungeon == "dungeon2":
         options1 = [
             {"label": "+20% bone fracture chance", "value": "bone"},
-            {"label": "+20% monster damage", "value": 20},
-            {"label": "+15% hero damage", "value": 15}
+            {"label": "+20% monster damage", "value": "monster"},
+            {"label": "+15% hero damage", "value": "hero"}
         ]
         options2 = [
             {"label": "+30% disease chance", "value": "disease"},
@@ -155,8 +155,8 @@ def dungeon_options(dungeon):
     elif dungeon == "dungeon3":
         options1 = [
             {"label": "+25% burn chance", "value": "burn"},
-            {"label": "+20% monster damage", "value": 20},
-            {"label": "+15% hero damage", "value": 15}
+            {"label": "+20% monster damage", "value": "monster"},
+            {"label": "+15% hero damage", "value": "hero"}
         ]
         options2 = [
             {"label": "+35% bone fracture chance", "value": "bone"},
@@ -167,8 +167,8 @@ def dungeon_options(dungeon):
         options1 = [
             {"label": "+25% disease chance for monster farm monsters", "value": "disease"},
             {"label": "+25% bone fracture chance for monster farm monsters", "value": "bone"},
-            {"label": "+20% monster damage", "value": 20},
-            {"label": "+15% hero damage", "value": 15},
+            {"label": "+20% monster damage", "value": "monster"},
+            {"label": "+15% hero damage", "value": "hero"},
             
         ]
         options2 = [
@@ -181,6 +181,4 @@ def dungeon_options(dungeon):
         options2 = []
     
     return [options1, options2]
-
-
 
