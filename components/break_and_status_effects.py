@@ -104,7 +104,8 @@ improved_div = html.Div(
             ]
         ),
         dbc.Tooltip(
-            "Alfred's undead monsters, Rocko's hardened golem, and DSiL's mighty dragon",
+            """Alfred's undead monsters, Rocko's hardened golem, DSiL's mighty dragon, and
+            boss monsters""",
             target="tooltip-target",
             placement="top"
         ),
@@ -124,7 +125,7 @@ improved_div = html.Div(
 
 prod_special_div = html.Div(
     [
-        html.H6("Select additional status effect chance(s)"),
+        html.H6("Select additional status effect(s)"),
         dbc.Checklist(
             options=[
                 {"label": "+10% (2nd special)", "value": "prod1"},
@@ -281,14 +282,20 @@ def update_chance(nclicks, effect, armor, weapon, monster, improved,
             else:
                 x = 0
                 
-            if "statue" in armor:
-                y = 25
-            elif "special" in armor and "cursed" in armor:
+            if "special" in armor and "cursed" in armor:
                 y = 99
+            elif "special" in armor and "cursed" in armor and "statue" in armor:
+                y = 99    
             elif "special" in armor:
                 y = 66
+            elif "special" in armor and "statue" in armor:
+                y = 66    
             elif "cursed" in armor:   
                 y = 33
+            elif "cursed" in armor and "statue" in armor:   
+                y = 33 
+            elif "statue" in armor:   
+                y = 25
             else:
                 y = 0
                 
@@ -322,7 +329,7 @@ def update_chance(nclicks, effect, armor, weapon, monster, improved,
             \nRound 3: {:.2f}%""".format(r1 * 100, r2 * 100, max * 100))
             
         else:   
-            x = 0.12 # base chance of inflicting status effects
+            x = 0.16 # base chance of inflicting status effects
             if len(prod) == 3:
                 total_prod = 1.3
             elif len(prod) == 2:
@@ -378,13 +385,11 @@ def update_chance(nclicks, effect, armor, weapon, monster, improved,
             r1 = 1 - (1 - base)
             r2 = 1 - ((1 - base) ** 2)
             r3 = 1 - ((1 - base) ** 3)
-            r4 = 1 - ((1 - base) ** 4)    
             
             return dcc.Markdown("""{} chance per round:\n
             \nRound 1: {:.2f}%\n
             \nRound 2: {:.2f}%\n
-            \nRound 3: {:.2f}%\n
-            \nRound 4: {:.2f}%""".format(status, r1 * 100, r2 * 100, r3 * 100, r4 * 100))
+            \nRound 3: {:.2f}%""".format(status, r1 * 100, r2 * 100, r3 * 100))
         
     else:
         raise PreventUpdate
