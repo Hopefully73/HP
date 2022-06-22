@@ -165,7 +165,7 @@ prod3_div = html.Div(
 
 unicorn_statue_div = html.Div(
     [
-        html.H6("Select bonus from unicorn statue"),
+        html.H6("Select total production speed bonus (unicorn statue)"),
         dbc.RadioItems(
             options=[
                 {"label": "None", "value": 0},
@@ -584,6 +584,19 @@ def update_time(n_clicks, result, building, b_level, b_special, maxi, prod1, pro
             error_message = f"Missing inputs: {', '.join(missing_inputs)}"
             return dcc.Markdown(error_message, style={"color": "red"})
         
+        if mini > maxi and desired > maxi:
+            return dcc.Markdown("""The minimum skill and minimum desired levels\n
+            \nmust not exceed the maximum skill level.""", style={"color": "red"})
+        if mini > maxi:
+            return dcc.Markdown("""The minimum skill level must not\n
+            \nexceed the maximum skill level.""", style={"color": "red"})
+        if desired > maxi:
+            return dcc.Markdown("""The minimum desired level must not\n
+            \nexceed the maximum skill level.""", style={"color": "red"})
+        if mini > desired:
+            return dcc.Markdown("""The minimum desired level must not\n
+            \nbe less than the minimum desired level.""", style={"color": "red"})
+        
         base = [2, 4, 6, 8, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27, 29,
                 31, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
         
@@ -631,25 +644,30 @@ def update_time(n_clicks, result, building, b_level, b_special, maxi, prod1, pro
         
         estimate_time = estimate / 60
         estimate_minutes = int(estimate_time)
-        estimate_seconds = final_prod % 60
+        estimate_seconds = math.modf(estimate_time)[0] * 60
         
         # F distribution
         a = stats.f.ppf(0.10, 2*x, 2*(n - x + 1)) 
         b = stats.f.ppf(0.90, 2*(x + 1), 2*(n - x))
         
-        # https://www.danielsoper.com/statcalc/formulas.aspx?id=85
-        c = (1 + ((n - x + 1) / (x * a)))**-1
-        d = (1 + ((n - x) / ((x + 1) * b)))**-1
+        # For when minimum skill level = minimum desired level = maximum
+        if x == n:
+            c = 1
+            d = 1
+        else:   
+            # https://www.danielsoper.com/statcalc/formulas.aspx?id=85
+            c = (1 + ((n - x + 1) / (x * a)))**-1
+            d = (1 + ((n - x) / ((x + 1) * b)))**-1
         
         lcl = (1 / c) * final_prod * slots  # lower limit
         lcl_time = lcl / 60
         lcl_minutes = int(lcl_time)
-        lcl_seconds = final_prod % 60
+        lcl_seconds = math.modf(lcl_time)[0] * 60
         
         ucl = (1 / d) * final_prod * slots  # upper limit
         ucl_time = ucl / 60
         ucl_minutes = int(ucl_time)
-        ucl_seconds = final_prod % 60
+        ucl_seconds = math.modf(ucl_time)[0] * 60
         
         return dcc.Markdown("""The expected total preparation time is around **{} minutes and {:.0f} seconds**.\n
         \nThe 90% confidence interval for this result is between **{} minutes and {:.0f} seconds** until
@@ -658,3 +676,5 @@ def update_time(n_clicks, result, building, b_level, b_special, maxi, prod1, pro
             
     else:
         raise PreventUpdate
+        
+        
