@@ -290,10 +290,10 @@ def update_chance(nclicks, effect, armor, weapon, monster, improved,
                 y = 66
             elif "special" in armor and "statue" in armor:
                 y = 66    
+            elif "cursed" in armor and "statue" in armor:   
+                y = 58     
             elif "cursed" in armor:   
                 y = 33
-            elif "cursed" in armor and "statue" in armor:   
-                y = 58 
             elif "statue" in armor:   
                 y = 25
             else:
