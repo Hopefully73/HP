@@ -508,7 +508,7 @@ def update_time(n_clicks, building, b_level, b_special, maxi, prod1, prod2, prod
             
         elif building == "monster3":
             base_prod = base[maxi - 1] * 1.5
-            final_prod = (base_prod / ((100 + b_prod + prod + statue) / 100)) / perk
+            final_prod = (base_prod / ((100 + b_prod + prod + relics + statue) / 100)) / perk
             
         elif building in ("temple", "trainer"):    
             base_prod = base[maxi - 1] * 2
@@ -517,7 +517,11 @@ def update_time(n_clicks, building, b_level, b_special, maxi, prod1, prod2, prod
         elif building == "monster4":
             base_prod = base[maxi - 1] * 2
             final_prod = (base_prod / ((100 + b_prod + prod + relics + statue) / 100)) / (perk * dsil)
-            
+        
+        elif building in ("monster1", "monster2"):
+            base_prod = base[maxi - 1]
+            final_prod = (base_prod / ((100 + b_prod + prod + relics + statue) / 100)) / perk 
+        
         elif building == "food":
             base_prod = 3600 - ((maxi - 1) * 45)
             final_prod = (base_prod / ((100 + b_prod + prod + statue) / 100))
@@ -615,7 +619,7 @@ def update_time(n_clicks, result, building, b_level, b_special, maxi, prod1, pro
             
         elif building == "monster3":
             base_prod = base[maxi - 1] * 1.5
-            final_prod = (base_prod / ((100 + b_prod + prod + statue) / 100)) / perk
+            final_prod = (base_prod / ((100 + b_prod + prod + relics + statue) / 100)) / perk
             
         elif building in ("temple", "trainer"):    
             base_prod = base[maxi - 1] * 2
@@ -624,6 +628,10 @@ def update_time(n_clicks, result, building, b_level, b_special, maxi, prod1, pro
         elif building == "monster4":
             base_prod = base[maxi - 1] * 2
             final_prod = (base_prod / ((100 + b_prod + prod + relics + statue) / 100)) / (perk * dsil)
+            
+        elif building in ("monster1", "monster2"):
+            base_prod = base[maxi - 1]
+            final_prod = (base_prod / ((100 + b_prod + prod + relics + statue) / 100)) / perk    
             
         elif building == "food":
             base_prod = 3600 - ((maxi - 1) * 45)
