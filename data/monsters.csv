@@ -1,18 +1,18 @@
-Monster,Max,Life,Damage,RP
-Goblin,25,50,10,50
-Orc,25,125,25,60
-Imp,25,75,20,50
-Skeleton,20,75,20,50
-Zombie,20,125,20,60
-Mummy,20,100,20,50
-Befouled skeleton,25,75,20,50
-Contaminated zombie,25,125,20,60
-Cursed mummy,25,100,20,50
-Gargoyle,25,100,25,60
-Troll,25,125,25,60
-Golem,20,150,30,70
-Hardened golem,25,150,30,70
-Fire element,25,75,20,50
-Fire demon,25,100,30,60
-Dragon,25,150,40,80
-Mighty dragon,25,150,40,80
+Monster,Type,Life,Damage,RP
+Goblin,regular,50,10,50
+Orc,regular,125,25,60
+Imp,regular,75,20,50
+Skeleton,undead,75,20,50
+Zombie,undead,125,20,60
+Mummy,undead,100,20,50
+Befouled skeleton,undead,75,20,50
+Contaminated zombie,undead,125,20,60
+Cursed mummy,undead,100,20,50
+Gargoyle,stone,100,25,60
+Troll,stone,125,25,60
+Golem,stone,150,30,70
+Hardened golem,stone,150,30,70
+Fire element,fire,75,20,50
+Fire demon,fire,100,30,60
+Dragon,fire,150,40,80
+Mighty dragon,fire,150,40,80
