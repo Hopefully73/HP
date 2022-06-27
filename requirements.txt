@@ -4,7 +4,6 @@ numpy
 pandas
 plotly
 scipy
-json
 dash
 dash_bootstrap_components
 dash_extensions
