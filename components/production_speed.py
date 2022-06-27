@@ -8,12 +8,12 @@ import pandas as pd
 import numpy as np
 import math
 import time
+import json
 from scipy import stats 
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
 from index import app
-from components import functions
 
 building_div = html.Div(
     [
@@ -86,6 +86,7 @@ max_level_div = html.Div(
             id="max-level",
             type="number",
             min=1,
+            max=30,
             value=25,
             style={
                 "width": "60%",
@@ -223,6 +224,23 @@ perk_div = html.Div(
     ]
 )
 
+lucullus_div = html.Div(
+    [
+        html.H6("Lucullus assigned?"),
+        dbc.RadioItems(
+            options=[
+                {"label": "Yes", "value": 25},
+                {"label": "No", "value": 0}
+            ],
+            value=25,
+            id="lucullus-radio",
+            inline=True,
+            persistence=True,
+            persistence_type="memory",
+        )
+    ]
+)
+
 dsil_div = html.Div(
     [
         html.H6("Producing dragons and Dragon's sister-in-law assigned?"),
@@ -334,6 +352,7 @@ layout = dbc.Container(
         html.Br(),
         dbc.Row(
             [
+                dbc.Col(lucullus_div, id = "lucullus-div"),
                 dbc.Col(dsil_div, id = "dsil-div")
             ]
         ),
@@ -422,19 +441,31 @@ def show_relic_special(building):
     Output("perk-div", "style"),
     Input("building-dropdown", "value")
 )
-def show_relic_special(building):
+def show_perk(building):
     if building != "food":
         return {'display': 'block'}
     else:
         return {'display': 'none'}    
 
+
+# Callback for Lucullus' global production speed legendary feature on taverns
+@app.callback(
+    Output("lucullus-div", "style"),
+    Input("building-dropdown", "value")
+)
+def show_lucllus(building):
+    if building == "tavern":
+        return {'display': 'block'}
+    else:
+        return {'display': 'none'}
+    
     
 # Callback for DSiL's double production speed legendary feature on dragons
 @app.callback(
     Output("dsil-div", "style"),
     Input("building-dropdown", "value")
 )
-def show_relic_special(building):
+def show_dsil(building):
     if building == "monster4":
         return {'display': 'block'}
     else:
@@ -470,11 +501,12 @@ def update_max(building):
         State("statue-radio", "value"),
         State("relic-checklist", "value"),
         State("perk-radio", "value"),
+        State("lucullus-radio", "value"),
         State("dsil-radio", "value")
     ]
 )
 def update_time(n_clicks, building, b_level, b_special, maxi, prod1, prod2, prod3,
-               statue, relic, perk, dsil):
+               statue, relic, perk, lucullus, dsil):
     if n_clicks:
         time.sleep(1)
         inputs = {
@@ -488,10 +520,10 @@ def update_time(n_clicks, building, b_level, b_special, maxi, prod1, prod2, prod
         if None in list(inputs.values()):
             missing_inputs = [x for x in list(inputs.keys()) if inputs[x] is None]
             error_message = f"Missing inputs: {', '.join(missing_inputs)}"
-            return dcc.Markdown(error_message, style={"color": "red"}), None
+            return dcc.Markdown(error_message, style={"color": "red"})
         
-        base = [2, 4, 6, 8, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27, 29,
-                31, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
+        base = [2, 4, 6, 8, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27, 29, 31, 33, 
+                35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 44, 44, 44, 44, 44]
         
         x = b_level - 10 + 1
         if x < 1:
@@ -526,9 +558,13 @@ def update_time(n_clicks, building, b_level, b_special, maxi, prod1, prod2, prod
             base_prod = 3600 - ((maxi - 1) * 45)
             final_prod = (base_prod / ((100 + b_prod + prod + statue) / 100))
            
-        elif building in ("alchemist", "tavern"):
+        elif building == "tavern":
             base_prod = base[maxi - 1]
-            final_prod = (base_prod / ((100 + b_prod + b_special + prod + statue) / 100)) / perk
+            final_prod = (base_prod / ((100 + b_prod + b_special + prod + statue + lucullus) / 100)) / perk
+            
+        elif building == "alchemist":
+            base_prod = base[maxi - 1]
+            final_prod = (base_prod / ((100 + b_prod + b_special + prod + statue) / 100)) / perk    
             
         else:
             base_prod = base[maxi - 1]
@@ -564,6 +600,7 @@ def update_time(n_clicks, building, b_level, b_special, maxi, prod1, prod2, prod
         State("statue-radio", "value"),
         State("relic-checklist", "value"),
         State("perk-radio", "value"),
+        State("lucullus-radio", "value"),
         State("dsil-radio", "value"),
         State("min-level", "value"),
         State("desired-level", "value"),
@@ -571,17 +608,21 @@ def update_time(n_clicks, building, b_level, b_special, maxi, prod1, prod2, prod
     ]
 )
 def update_time(n_clicks, result, building, b_level, b_special, maxi, prod1, prod2, prod3,
-               statue, relic, perk, dsil, mini, desired, slots):
+               statue, relic, perk, lucullus, dsil, mini, desired, slots):
     if n_clicks:
         time.sleep(1)
+        
+        text = json.dumps(result) # converts markdown dict result to string
+        
+        if result is None or "inputs" in text:
+            return dcc.Markdown("Please calculate the final production time first.", 
+                                style={"color": "red"})
+        
         inputs = {
             "Minimum skill level": mini,
             "Desired level": desired,
             "Slots": slots
         }
-        if result is None:
-            return dcc.Markdown("Please calculate the final production time first.", 
-                                style={"color": "red"})
         
         if None in list(inputs.values()):
             missing_inputs = [x for x in list(inputs.keys()) if inputs[x] is None]
@@ -601,8 +642,8 @@ def update_time(n_clicks, result, building, b_level, b_special, maxi, prod1, pro
             return dcc.Markdown("""The minimum desired level must not\n
             \nbe less than the minimum desired level.""", style={"color": "red"})
         
-        base = [2, 4, 6, 8, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27, 29,
-                31, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
+        base = [2, 4, 6, 8, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27, 29, 31, 33, 
+                35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 44, 44, 44, 44, 44]
         
         x = b_level - 10 + 1
         if x < 1:
@@ -637,7 +678,11 @@ def update_time(n_clicks, result, building, b_level, b_special, maxi, prod1, pro
             base_prod = 3600 - ((maxi - 1) * 45)
             final_prod = (base_prod / ((100 + b_prod + prod + statue) / 100))
            
-        elif building in ("alchemist", "tavern"):
+        elif building == "tavern":
+            base_prod = base[maxi - 1]
+            final_prod = (base_prod / ((100 + b_prod + b_special + prod + statue + lucullus) / 100)) / perk
+            
+        elif building == "alchemist":
             base_prod = base[maxi - 1]
             final_prod = (base_prod / ((100 + b_prod + b_special + prod + statue) / 100)) / perk
             
