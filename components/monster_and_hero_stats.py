@@ -101,8 +101,8 @@ get_monster_div = html.Div(
         dcc.Dropdown(
             id="monster-dropdown",
             options=[{'label': i, 'value': i} for i in x],
-            persistence=True,
-            persistence_type="memory",
+            #persistence=True,
+            #persistence_type="memory",
             placeholder = "Choose one from the list."
         )
     ],
@@ -130,11 +130,25 @@ monster_level_div = html.Div(
 
 boss_monster_div = html.Div(
     [
-        html.H6("Select boss monster"),
+        html.H6(
+            [
+                "Select ", 
+                html.Span(
+                    "boss monster",
+                    id="boss-monster-tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"}
+                )
+            ]
+        ),
+        dbc.Tooltip(
+            """The golem king and mummy king have slightly higher life and RP.""",
+            target="boss-monster-tooltip-target",
+            placement="top"
+        ),
         dbc.RadioItems(
             options=[
                 {"label": "Dragon or others", "value": "others"},
-                {"label": "Golem or Mummy King", "value": "improved"}
+                {"label": "Golem King or Mummy King", "value": "improved"}
             ],
             value="others",
             id="boss-monster-radio",
@@ -216,8 +230,8 @@ prod_special1_div = html.Div(
         dcc.Dropdown(
             id="prod-special1-dropdown",
             options=[],
-            persistence=True,
-            persistence_type="memory",
+            #persistence=True,
+            #persistence_type="memory",
             placeholder = "Choose one from the list."
         )
     ]
@@ -229,8 +243,8 @@ prod_special2_div = html.Div(
         dcc.Dropdown(
             id="prod-special2-dropdown",
             options=[],
-            persistence=True,
-            persistence_type="memory",
+            #persistence=True,
+            #persistence_type="memory",
             placeholder = "Choose one from the list."
         )
     ]
@@ -242,8 +256,8 @@ prod_special3_div = html.Div(
         dcc.Dropdown(
             id="prod-special3-dropdown",
             options=[],
-            persistence=True,
-            persistence_type="memory",
+            #persistence=True,
+            #persistence_type="memory",
             placeholder = "Choose one from the list."
         )
     ]
@@ -520,10 +534,13 @@ def get_dungeon_rp(dungeon):
     [
         Output("prod-special1-name", "children"),
         Output("prod-special1-dropdown", "options"),
+        Output("prod-special1-dropdown", "value"),
         Output("prod-special2-name", "children"),
         Output("prod-special2-dropdown", "options"),
+        Output("prod-special2-dropdown", "value"),
         Output("prod-special3-name", "children"),
         Output("prod-special3-dropdown", "options"), 
+        Output("prod-special3-dropdown", "value") 
     ],
     Input("monster-dropdown", "value")
 )
@@ -605,9 +622,9 @@ def get_prod_building(monster):
         options2=[]
         options3=[]
         
-    return [f"Select effect (2nd {name} special)", options1, 
-            f"Select effect (3rd {name} special)", options2, 
-            f"Select effect (4th {name} special)", options3]
+    return [f"Select effect (2nd {name} special)", options1, None, 
+            f"Select effect (3rd {name} special)", options2, None, 
+            f"Select effect (4th {name} special)", options3, None]
 
 
 # Callback for the corresponding options under each monster category
@@ -825,7 +842,7 @@ def update_monster_dmg(n_clicks, result, hero_lvl, bought, weapon, dungeon, spec
                 and **Demonic Castle**."""
                 return dcc.Markdown(error_message, style={"color": "red"})
             
-            if monster_type == "stone" and dungeon in ("dungeon1", "dungeon1.5", "dungeon2"):
+            if monster_type == "fire" and dungeon in ("dungeon1", "dungeon1.5", "dungeon2"):
                 error_message = f"""The **{monster}** can only be placed in the **Demonic Castle**
                 and **Dark Palace**."""
                 return dcc.Markdown(error_message, style={"color": "red"})
