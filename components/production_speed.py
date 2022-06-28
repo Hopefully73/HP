@@ -45,7 +45,20 @@ building_div = html.Div(
 
 building_level_div = html.Div(
     [
-        html.H6("Buiding level"),
+        html.H6(
+            [ 
+                html.Span(
+                    "Building level",
+                    id="building-level-tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"}
+                )
+            ]
+        ),
+        dbc.Tooltip(
+            "+5% production speed bonus per level (starts at level 10)",
+            target="building-level-tooltip-target",
+            placement="top"
+        ),
         dcc.Input(
             id="building-level",
             type="number",
@@ -64,7 +77,21 @@ building_level_div = html.Div(
 
 building_special_div = html.Div(
     [
-        html.H6("Building production speed special bought?"),
+        html.H6(
+            [
+                html.Span(
+                    "Building production speed special",
+                    id="building-special-tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"}
+                ),
+                " bought?"
+            ]
+        ),
+        dbc.Tooltip(
+            """+50% production speed bonus when bought.""",
+            target="building-special-tooltip-target",
+            placement="top"
+        ),
         dbc.RadioItems(
             options=[
                 {"label": "Yes", "value": 50},
@@ -209,7 +236,22 @@ relics_div = html.Div(
 
 perk_div = html.Div(
     [
-        html.H6("Double production speed perk activated?"),
+        html.H6(
+            [
+                html.Span(
+                    "Double production speed perk",
+                    id="perk-tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"}
+                ),
+                " activated?"
+            ]
+        ),
+        dbc.Tooltip(
+            """Costs 7,500 honor points at the devilish unicorn statue. It will only
+            work when there are < 2 heroes in the town.""",
+            target="perk-tooltip-target",
+            placement="top"
+        ),
         dbc.RadioItems(
             options=[
                 {"label": "Yes", "value": 2},
@@ -226,7 +268,21 @@ perk_div = html.Div(
 
 lucullus_div = html.Div(
     [
-        html.H6("Lucullus assigned?"),
+        html.H6(
+            [
+                html.Span(
+                    "Lucullus",
+                    id="lucullus-tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"}
+                ),
+                " assigned?"
+            ]
+        ),
+        dbc.Tooltip(
+            """+25% production speed bonus to both taverns when he is assigned.""",
+            target="lucullus-tooltip-target",
+            placement="top"
+        ),
         dbc.RadioItems(
             options=[
                 {"label": "Yes", "value": 25},
@@ -243,7 +299,21 @@ lucullus_div = html.Div(
 
 dsil_div = html.Div(
     [
-        html.H6("Producing dragons and Dragon's sister-in-law assigned?"),
+        html.H6(
+            [
+                html.Span(
+                    "Producing dragons and Dragon's sister-in-law",
+                    id="dsil-tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"}
+                ),
+                " assigned?"
+            ]
+        ),
+        dbc.Tooltip(
+            """Production times of any dragon is halved when she is assigned.""",
+            target="dsil-tooltip-target",
+            placement="top"
+        ),
         dbc.RadioItems(
             options=[
                 {"label": "Yes", "value": 2},
