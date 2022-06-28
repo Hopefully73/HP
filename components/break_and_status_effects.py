@@ -97,7 +97,7 @@ improved_div = html.Div(
                 "Use ", 
                 html.Span(
                     "improved",
-                    id="tooltip-target",
+                    id="improved-tooltip-target",
                     style={"textDecoration": "underline", "cursor": "pointer"}
                 ),
                 " monsters?"
@@ -106,7 +106,7 @@ improved_div = html.Div(
         dbc.Tooltip(
             """Alfred's undead monsters, Rocko's hardened golem, DSiL's mighty dragon, and
             boss monsters""",
-            target="tooltip-target",
+            target="improved-tooltip-target",
             placement="top"
         ),
         dbc.RadioItems(
@@ -373,10 +373,10 @@ def update_chance(nclicks, effect, armor, weapon, monster, improved,
                 
             else:
                 if dungeon == "dungeon4" and special1 == "disease":
-                    base = 0.07
+                    base = 0.09144
                     status = "Disease"
                 elif dungeon == "dungeon4" and special1 == "bone":
-                    base = 0.07
+                    base = 0.09144
                     status = "Bone fracture"
                 else:
                     base = 0
