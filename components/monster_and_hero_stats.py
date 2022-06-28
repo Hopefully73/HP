@@ -101,8 +101,8 @@ get_monster_div = html.Div(
         dcc.Dropdown(
             id="monster-dropdown",
             options=[{'label': i, 'value': i} for i in x],
-            #persistence=True,
-            #persistence_type="memory",
+            persistence=True,
+            persistence_type="memory",
             placeholder = "Choose one from the list."
         )
     ],
@@ -230,8 +230,8 @@ prod_special1_div = html.Div(
         dcc.Dropdown(
             id="prod-special1-dropdown",
             options=[],
-            #persistence=True,
-            #persistence_type="memory",
+            persistence=True,
+            persistence_type="memory",
             placeholder = "Choose one from the list."
         )
     ]
@@ -243,8 +243,8 @@ prod_special2_div = html.Div(
         dcc.Dropdown(
             id="prod-special2-dropdown",
             options=[],
-            #persistence=True,
-            #persistence_type="memory",
+            persistence=True,
+            persistence_type="memory",
             placeholder = "Choose one from the list."
         )
     ]
@@ -256,8 +256,8 @@ prod_special3_div = html.Div(
         dcc.Dropdown(
             id="prod-special3-dropdown",
             options=[],
-            #persistence=True,
-            #persistence_type="memory",
+            persistence=True,
+            persistence_type="memory",
             placeholder = "Choose one from the list."
         )
     ]
