@@ -95,7 +95,7 @@ layout = html.Div(
                         html.Br(),
                         html.H5("Kindly fill up the dungeon settings below before proceeding.")
                     ],
-                    style={"width": "80%", "padding-left": "11%"}
+                    style={"width": "80%", "padding-left": "10.5%"}
                 ),
                 dbc.Row(
                     [
@@ -105,7 +105,7 @@ layout = html.Div(
                         dbc.Col(dungeon_special2_div),
                         dbc.Col(dungeon_special3_div)
                     ],
-                    style={"width": "80%", "padding-left": "10%"}
+                    style={"width": "90%", "padding-left": "10%"}
                 )
             ],
             className="header_row",
@@ -116,8 +116,11 @@ layout = html.Div(
 @app.callback(
     [
         Output("special1-dropdown", "options"),
+        Output("special1-dropdown", "value"),
         Output("special2-dropdown", "options"),
-        Output("special3-dropdown", "options")
+        Output("special2-dropdown", "value"),
+        Output("special3-dropdown", "options"),
+        Output("special3-dropdown", "value")
     ],
     Input("dungeon-dropdown", "value")
 )
@@ -190,5 +193,5 @@ def dungeon_options(dungeon):
         options2 = []
         options3 = []
     
-    return [options1, options2, options3]
+    return [options1, None, options2, None, options3, None]
 
