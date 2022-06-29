@@ -95,7 +95,7 @@ layout = html.Div(
                         html.Br(),
                         html.H5("Kindly fill up the dungeon settings below before proceeding.")
                     ],
-                    style={"width": "80%", "padding-left": "10.5%"}
+                    style={"width": "80%", "padding-left": "9%"}
                 ),
                 dbc.Row(
                     [
