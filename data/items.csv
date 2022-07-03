@@ -1,0 +1,59 @@
+Shop,Item,Base
+alchemist,Health potion,20
+alchemist,Mana potion,20
+alchemist,Stamina potion,20
+alchemist,Experience potion,40
+alchemist,Improved health potion,24
+alchemist,Hexed mana potion,24
+alchemist,Hexed stamina potion,24
+tavern,Meat,20
+tavern,Beer,10
+tavern,Snacks,10
+tavern,Schnapps,10
+tavern,Special meat,24
+tavern,Special beer,12
+armor,Light armor,100
+armor,Medium armor,120
+armor,Heavy armor,140
+armor,Fancy light armor,120
+armor,Improved medium armor,140
+armor,Awesome heavy armor,160
+armor,Cursed light armor,100
+armor,Cursed medium armor,120
+armor,Cursed heavy armor,140
+weapon,Sword,60
+weapon,Ax,70
+weapon,Crossbow,80
+weapon,Bow,80
+weapon,Cursed sword,60
+weapon,Cursed ax,70
+weapon,Cursed crossbow,80
+weapon,Improved bow,100
+weapon,Noble sword,100
+weapon,Noble ax,100
+weapon,Noble crossbow,100
+magic,Fire wand,100
+magic,Ice wand,100
+magic,Lightning wand,120
+magic,Magical amulet,60
+magic,Magical ring,50
+magic,Cursed fire wand,100
+magic,Cursed ice wand,100
+trainer,Melee training,80
+trainer,Ranged training,90
+trainer,Magic training,100
+trainer,Fist fighting training,60
+temple,Cure disease,60
+temple,Heal bone fracture,80
+temple,Cure burn,100
+temple,Blessing of the dwarves,50
+temple,Blessing of the elves,50
+temple,Blessing of the humans,50
+temple,Blessing of the unicorn,50
+loot,Fake goblet,20
+loot,Fake crown,20
+loot,Pouch of stuff,20
+loot,Chest with stuff,40
+loot,Big pouch of stuff,24
+loot,Golden chest,50
+loot,A gift,50
