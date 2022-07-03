@@ -114,7 +114,8 @@ layout = html.Div(
             ],
             className="header_row",
         )
-    ]
+    ],
+    className="header_panel"
 )
 
 @app.callback(
