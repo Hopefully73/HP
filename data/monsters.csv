@@ -1,4 +1,5 @@
 Monster,Type,Life,Damage,RP
+Aggressive chest,chest,25,5,10
 Goblin,regular,50,10,50
 Orc,regular,125,25,60
 Imp,regular,75,20,50
