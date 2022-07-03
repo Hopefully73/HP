@@ -34,6 +34,7 @@ dungeon_div = html.Div(
             ],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ],
@@ -48,6 +49,7 @@ dungeon_special1_div = html.Div(
             options=[],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ],
@@ -62,6 +64,7 @@ dungeon_special2_div = html.Div(
             options=[],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ],
@@ -76,6 +79,7 @@ dungeon_special3_div = html.Div(
             options=[],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ],
@@ -105,7 +109,7 @@ layout = html.Div(
                         dbc.Col(dungeon_special2_div),
                         dbc.Col(dungeon_special3_div)
                     ],
-                    style={"width": "90%", "padding-left": "10%"}
+                    style={"width": "90%", "padding-left": "9%"}
                 )
             ],
             className="header_row",
