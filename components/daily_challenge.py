@@ -12,7 +12,6 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
 from index import app
-from components import functions
 
 daily_div = html.Div(
     [
@@ -31,6 +30,7 @@ daily_div = html.Div(
             ],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ],
