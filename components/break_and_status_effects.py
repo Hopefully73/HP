@@ -12,8 +12,7 @@ import time
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from index import app, server
-from components import functions
+from index import app
 
 effect_div = html.Div(
     [
@@ -27,6 +26,7 @@ effect_div = html.Div(
             ],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ],
