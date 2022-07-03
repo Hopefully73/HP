@@ -27,7 +27,7 @@ hero_level_div = html.Div(
             id="hero-level",
             type="number",
             min=1,
-            max=35,
+            max=30,
             value=30,
             style={
                 "width": "60%",
@@ -41,7 +41,22 @@ hero_level_div = html.Div(
 
 hero_weapon_div = html.Div(
     [
-        html.H6("Bought a weapon/wand before combat?"),
+        html.H6(
+            [
+                "Bought a ",
+                html.Span(
+                    "weapon/wand",
+                    id="hero-weapon-tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"}
+                ),
+                " before combat?"
+            ]
+        ),
+        dbc.Tooltip(
+            "Higher level weaponry provides more additional damage.",
+            target="hero-weapon-tooltip-target",
+            placement="top"
+        ),
         dbc.RadioItems(
             options=[
                 {"label": "Yes", "value": "yes"},
@@ -63,7 +78,7 @@ hero_weapon_level_div = html.Div(
             id="hero-weapon-level",
             type="number",
             min=1,
-            max=30,
+            max=25,
             value=25,
             style={
                 "width": "60%",
@@ -89,6 +104,7 @@ monster_cat_div = html.Div(
             ],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ],
@@ -103,6 +119,7 @@ get_monster_div = html.Div(
             options=[{'label': i, 'value': i} for i in x],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ],
@@ -116,7 +133,7 @@ monster_level_div = html.Div(
             id="monster-level",
             type="number",
             min=1,
-            max=30,
+            max=25,
             value=25,
             style={
                 "width": "60%",
@@ -232,6 +249,7 @@ prod_special1_div = html.Div(
             options=[],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ]
@@ -245,6 +263,7 @@ prod_special2_div = html.Div(
             options=[],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ]
@@ -258,6 +277,7 @@ prod_special3_div = html.Div(
             options=[],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ]
@@ -671,9 +691,9 @@ def show_options(cat):
 )
 def update_max(monster):
     if monster in ("Skeleton", "Zombie", "Mummy", "Golem"):
-        return [25, 20]
+        return [20, 20]
     else:
-        return [30, 25]
+        return [25, 25]
 
     
 # Callback for the boss monster type
@@ -744,6 +764,7 @@ def update_monster_dmg(n_clicks, result, hero_lvl, bought, weapon, dungeon, spec
         
         if cat == "regular":
             inputs = {
+                "Dungeon": dungeon,
                 "2nd dungeon special": special1,
                 "4th dungeon special": special2,
                 "Monster": monster,
@@ -754,12 +775,14 @@ def update_monster_dmg(n_clicks, result, hero_lvl, bought, weapon, dungeon, spec
             }
         elif cat == "boss":
             inputs = {
+                "Dungeon": dungeon,
                 "2nd dungeon special": special1,
                 "4th dungeon special": special2,
                 "Boss monster level": boss_lvl
             }
         elif cat == "sv":
             inputs = {
+                "Dungeon": dungeon,
                 "2nd dungeon special": special1,
                 "4th dungeon special": special2,
                 "Supervillain level": sv_lvl
