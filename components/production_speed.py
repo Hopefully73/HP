@@ -37,6 +37,7 @@ building_div = html.Div(
             ],
             persistence=True,
             persistence_type="memory",
+            clearable=False,
             placeholder = "Choose one from the list."
         )
     ],
@@ -63,7 +64,7 @@ building_level_div = html.Div(
             id="building-level",
             type="number",
             min=1,
-            max=25,
+            max=20,
             value=20,
             style={
                 "width": "60%",
@@ -113,7 +114,7 @@ max_level_div = html.Div(
             id="max-level",
             type="number",
             min=1,
-            max=30,
+            max=25,
             value=25,
             style={
                 "width": "60%",
@@ -335,7 +336,7 @@ min_level_div = html.Div(
             id="min-level",
             type="number",
             min=1,
-            max=30,
+            max=17,
             value=17,
             persistence=True,
             persistence_type="memory",
@@ -356,7 +357,7 @@ desired_level_div = html.Div(
             id="desired-level",
             type="number",
             min=1,
-            max=30,
+            max=25,
             value=24,
             persistence=True,
             persistence_type="memory",
@@ -552,7 +553,7 @@ def update_max(building):
         max = 38
         return max
     else:
-        max = 30
+        max = 25
         return max
 
     
