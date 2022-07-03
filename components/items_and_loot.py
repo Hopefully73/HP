@@ -485,10 +485,7 @@ def calculate_item_loot(n_clicks, dungeon, shop, item, level, tips1, tips2, tips
             inputs = {
                 "Dungeon": dungeon,
                 "Loot": item,
-                "Maximum loot level": level,
-                "Employee #1": tips1,
-                "Employee #2": tips2,
-                "Employee #3": tips3
+                "Maximum loot level": level
             }
         elif shop in ("alchemist", "tavern", "armor", "weapon", "magic", "temple", "trainer"):
             inputs = {
