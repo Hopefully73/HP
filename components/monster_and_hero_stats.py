@@ -227,6 +227,37 @@ sv_level_div = html.Div(
     ]
 )
 
+junk_special_div = html.Div(
+    [
+        html.H6(
+            [
+                html.Span(
+                    "Junk factory RP special",
+                    id="junk-special-tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"}
+                ),
+                " bought?"
+            ]
+        ),
+        dbc.Tooltip(
+            """+25% RP when bought.""",
+            target="junk-special-tooltip-target",
+            placement="top"
+        ),
+        dbc.RadioItems(
+            options=[
+                {"label": "Yes", "value": 25},
+                {"label": "No", "value": 0}
+            ],
+            value=25,
+            id="junk-special-radio",
+            inline=True,
+            persistence=True,
+            persistence_type="memory",
+        )
+    ]
+)
+
 dungeon_rp_div = html.Div(
     [
         html.H6("Select applied dungeon RP bonus"),
@@ -377,6 +408,7 @@ layout = dbc.Container(
         html.Br(),
         dbc.Row(
             [
+                dbc.Col(junk_special_div, id = "junk-special-div"),
                 dbc.Col(prod_special1_div, id = "prod-special1-div", style={"padding-top": "1%"}),
                 dbc.Col(prod_special2_div, id = "prod-special2-div", style={"padding-top": "1%"}),
                 dbc.Col(prod_special3_div, id = "prod-special3-div", style={"padding-top": "1%"})
@@ -635,7 +667,7 @@ def get_prod_building(monster):
             {"label": "+10% burn chance", "value": "burn"},
             {"label": "+30% life", "value": "life"},
             {"label": "+30% RP", "value": "rp"}
-        ]
+        ]    
     else:
         name = "building"
         options1=[]
@@ -656,30 +688,46 @@ def get_prod_building(monster):
         Output("boss-type-div", "style"),
         Output("boss-level-div", "style"),
         Output("sv-level-div", "style"),
+        Output("junk-special-div", "style"),
         Output("prod-special1-div", "style"),
         Output("prod-special2-div", "style"),
         Output("prod-special3-div", "style")
     ],
-    Input("monster-cat-dropdown", "value")
+    [
+        Input("monster-cat-dropdown", "value"),
+        Input("monster-dropdown", "value")
+    ]
 )
-def show_options(cat):
-    if cat == "regular":
+def show_options(cat, monster):
+    x = df.query("Monster == @monster")
+    monster_type = x["Type"].unique()
+    
+    if cat == "regular" and monster_type == "chest":
         return [{'display': 'block'}, {'display': 'block'}, {'display': 'none'},
                 {'display': 'none'}, {'display': 'none'}, {'display': 'none'},
-                {'display': 'block'}, {'display': 'block'}, {'display': 'block'}]
+                {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, 
+                {'display': 'none'}] 
+    elif cat == "regular":
+        return [{'display': 'block'}, {'display': 'block'}, {'display': 'none'},
+                {'display': 'none'}, {'display': 'none'}, {'display': 'none'},
+                {'display': 'none'}, {'display': 'block'}, {'display': 'block'}, 
+                {'display': 'block'}]   
     elif cat == "boss":
         return [{'display': 'none'}, {'display': 'none'}, {'display': 'block'},
                 {'display': 'block'}, {'display': 'block'}, {'display': 'none'}, 
-                {'display': 'none'}, {'display': 'none'}, {'display': 'none'}]
+                {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, 
+                {'display': 'none'}]
     elif cat == "sv":
         return [{'display': 'none'}, {'display': 'none'}, {'display': 'none'},
                 {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, 
-                {'display': 'none'}, {'display': 'none'}, {'display': 'none'}]
+                {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, 
+                {'display': 'none'}]
     else:
         return [{'display': 'none'}, {'display': 'none'}, {'display': 'none'},
                 {'display': 'none'}, {'display': 'none'}, {'display': 'none'},
-                {'display': 'none'}, {'display': 'none'}, {'display': 'none'}]
-
+                {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, 
+                {'display': 'none'}]
+    
     
 # Callback for the monster level max possible value
 @app.callback(
@@ -743,6 +791,7 @@ def update_boss_type(boss):
         State("boss-monster-level", "value"),
         State("sv-level", "value"),
         State("dungeon-rp-checklist", "value"),
+        State("junk-special-radio", "value"),
         State("prod-special1-dropdown", "value"),
         State("prod-special2-dropdown", "value"),
         State("prod-special3-dropdown", "value"),
@@ -752,7 +801,7 @@ def update_boss_type(boss):
 )
 def update_monster_dmg(n_clicks, result, hero_lvl, bought, weapon, dungeon, special1, special2,
                        cat, monster, monster_lvl, boss, boss_type, boss_lvl, sv_lvl, dungeon_rp,
-                       prod1, prod2, prod3, statue, relics):
+                       junk, prod1, prod2, prod3, statue, relics):
     if n_clicks:
         time.sleep(1)
         
@@ -762,7 +811,18 @@ def update_monster_dmg(n_clicks, result, hero_lvl, bought, weapon, dungeon, spec
             return dcc.Markdown("Please calculate the hero damage first.", 
                                 style={"color": "red"})
         
-        if cat == "regular":
+        x = df.query("Monster == @monster")
+        monster_type = x["Type"].unique()
+            
+        if cat == "regular" and monster_type == "chest":
+            inputs = {
+                "Dungeon": dungeon,
+                "2nd dungeon special": special1,
+                "4th dungeon special": special2,
+                "Monster": monster,
+                "Monster level": monster_lvl
+            }    
+        elif cat == "regular":
             inputs = {
                 "Dungeon": dungeon,
                 "2nd dungeon special": special1,
@@ -945,10 +1005,19 @@ def update_monster_dmg(n_clicks, result, hero_lvl, bought, weapon, dungeon, spec
             else:
                 rp_mult3 = 1
                 
-            name = "monster"
+            if monster_type == "chest":
+                junk_mult = 1 + (junk / 100)
+            else:
+                junk_mult = 1
+            
+            if monster_type == "chest":
+                name = "disguised monster"
+            else:    
+                name = "monster"
+            
             life = life_lvl * life_mult1 * life_mult2 * life_mult3
             dmg = dmg_lvl * dmg_mult1 * dmg_mult2 * dmg_mult3 * extra_mult * more_mult / less_mult
-            rp = rp_lvl * rp_mult1 * rp_mult2 * rp_mult3 * dungeon_mult * statue_mult * relics_mult
+            rp = rp_lvl * rp_mult1 * rp_mult2 * rp_mult3 * dungeon_mult * junk_mult * statue_mult * relics_mult 
         elif cat == "boss":
             if boss == "improved":
                 improved_mult1 = 1 + (1 / 6) # more life
@@ -988,12 +1057,19 @@ def update_monster_dmg(n_clicks, result, hero_lvl, bought, weapon, dungeon, spec
         dmg = math.floor(dmg)
         rp = math.floor(rp)
         hits = math.ceil(life / hero_dmg)    
-            
-        return dcc.Markdown("""**Life**: {:,}\n
-        \n**Damage**: {:,}\n
-        \n**RP**: {:,} \n
-        \nIt will take **{} hits** to kill this **{}**.
-        """.format(life, dmg, rp, hits, name))
+        
+        if hits == 1:
+            return dcc.Markdown("""**Life**: {:,}\n
+            \n**Damage**: {:,}\n
+            \n**RP**: {:,} \n
+            \nIt will take **{} hit** to kill this **{}**.
+            """.format(life, dmg, rp, hits, name))
+        else:    
+            return dcc.Markdown("""**Life**: {:,}\n
+            \n**Damage**: {:,}\n
+            \n**RP**: {:,} \n
+            \nIt will take **{} hits** to kill this **{}**.
+            """.format(life, dmg, rp, hits, name))
         
     else:
         raise PreventUpdate  
