@@ -64,7 +64,7 @@ building_level_div = html.Div(
             id="building-level",
             type="number",
             min=1,
-            max=20,
+            max=25,
             value=20,
             style={
                 "width": "60%",
@@ -114,7 +114,7 @@ max_level_div = html.Div(
             id="max-level",
             type="number",
             min=1,
-            max=25,
+            max=30,
             value=25,
             style={
                 "width": "60%",
@@ -336,7 +336,7 @@ min_level_div = html.Div(
             id="min-level",
             type="number",
             min=1,
-            max=17,
+            max=22,
             value=17,
             persistence=True,
             persistence_type="memory",
@@ -357,7 +357,7 @@ desired_level_div = html.Div(
             id="desired-level",
             type="number",
             min=1,
-            max=25,
+            max=30,
             value=24,
             persistence=True,
             persistence_type="memory",
@@ -550,10 +550,10 @@ def show_dsil(building):
 )
 def update_max(building):
     if building == "food":
-        max = 38
+        max = 43
         return max
     else:
-        max = 25
+        max = 30
         return max
 
     
@@ -594,7 +594,8 @@ def update_time(n_clicks, building, b_level, b_special, maxi, prod1, prod2, prod
             return dcc.Markdown(error_message, style={"color": "red"})
         
         base = [2, 4, 6, 8, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27, 29, 31, 33, 
-                35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 44, 44, 44, 44, 44]
+                35, 36, 37, 38, 39, 40, 41, 42, 42.5, 43, 43.5, 44, 44.5, 
+                44.75, 45]
         
         x = b_level - 10 + 1
         if x < 1:
@@ -714,7 +715,8 @@ def update_time(n_clicks, result, building, b_level, b_special, maxi, prod1, pro
             \nbe less than the minimum desired level.""", style={"color": "red"})
         
         base = [2, 4, 6, 8, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27, 29, 31, 33, 
-                35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 44, 44, 44, 44, 44]
+                35, 36, 37, 38, 39, 40, 41, 42, 42.5, 43, 43.5, 44, 44.5, 
+                44.75, 45]
         
         x = b_level - 10 + 1
         if x < 1:

@@ -62,7 +62,7 @@ item_level_div = html.Div(
             id="item-max-level",
             type="number",
             min=1,
-            max=25,
+            max=30,
             value=25,
             style={
                 "width": "60%",
@@ -509,7 +509,7 @@ def calculate_item_loot(n_clicks, dungeon, shop, item, level, tips1, tips2, tips
         
         lvl_prog = [1, 1.5, 2, 2.4, 2.8, 3.1, 3.35, 3.6, 3.85, 4.1, 4.3, 4.5, 4.7, 
                     4.9, 5.1, 5.25, 5.4, 5.55, 5.7, 5.85, 6, 6.1, 6.2, 6.3, 6.4, 
-                    6.4, 6.4, 6.4, 6.4, 6.4]
+                    6.5, 6.6, 6.7, 6.8, 6.9]
         
         if shop == "loot":
             x = df.query("Item == @item")

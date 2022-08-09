@@ -27,7 +27,7 @@ hero_level_div = html.Div(
             id="hero-level",
             type="number",
             min=1,
-            max=30,
+            max=35,
             value=30,
             style={
                 "width": "60%",
@@ -78,7 +78,7 @@ hero_weapon_level_div = html.Div(
             id="hero-weapon-level",
             type="number",
             min=1,
-            max=25,
+            max=30,
             value=25,
             style={
                 "width": "60%",
@@ -133,7 +133,7 @@ monster_level_div = html.Div(
             id="monster-level",
             type="number",
             min=1,
-            max=25,
+            max=30,
             value=25,
             style={
                 "width": "60%",
@@ -739,9 +739,9 @@ def show_options(cat, monster):
 )
 def update_max(monster):
     if monster in ("Skeleton", "Zombie", "Mummy", "Golem"):
-        return [20, 20]
+        return [25, 20]
     else:
-        return [25, 25]
+        return [30, 25]
 
     
 # Callback for the boss monster type
