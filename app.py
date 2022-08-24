@@ -11,17 +11,18 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
 from components import (
-    header, production_speed, items_and_loot, daily_challenge, 
-    monster_and_hero_stats, break_and_status_effects
+    header, production_speed, supervillain, items_and_loot, 
+    daily_challenge, monster_and_hero_stats, break_and_status_effects
 )
 
 from index import app, server
 
 tab1_panels = dbc.Container([production_speed.layout])
-tab2_panels = dbc.Container([items_and_loot.layout])
-tab3_panels = dbc.Container([daily_challenge.layout])
-tab4_panels = dbc.Container([monster_and_hero_stats.layout])
-tab5_panels = dbc.Container([break_and_status_effects.layout])
+tab2_panels = dbc.Container([supervillain.layout])
+tab3_panels = dbc.Container([items_and_loot.layout])
+tab4_panels = dbc.Container([daily_challenge.layout])
+tab5_panels = dbc.Container([monster_and_hero_stats.layout])
+tab6_panels = dbc.Container([break_and_status_effects.layout])
 
 tabs_div = html.Div(
     [
@@ -38,26 +39,32 @@ tabs_div = html.Div(
                     selected_className="custom-tab--selected",
                 ),
                 dcc.Tab(
-                    label="Item Prices & Loot RP",
+                    label="Supervillain",
                     value="tab-2",
                     className="custom-tab",
                     selected_className="custom-tab--selected",
                 ),
                 dcc.Tab(
-                    label="Daily Challenge",
+                    label="Item Prices & Loot RP",
                     value="tab-3",
                     className="custom-tab",
                     selected_className="custom-tab--selected",
                 ),
                 dcc.Tab(
-                    label="Hero & Monster Stats",
+                    label="Daily Challenge",
                     value="tab-4",
                     className="custom-tab",
                     selected_className="custom-tab--selected",
                 ),
                 dcc.Tab(
-                    label="Break & Status Effects",
+                    label="Hero & Monster Stats",
                     value="tab-5",
+                    className="custom-tab",
+                    selected_className="custom-tab--selected",
+                ),
+                dcc.Tab(
+                    label="Break & Status Effects",
+                    value="tab-6",
                     className="custom-tab",
                     selected_className="custom-tab--selected",
                 )
@@ -86,7 +93,17 @@ app.layout = html.Div(
     Input("tabs-with-classes", "value"),
 )
 def render_content(tab):
-    if tab == "tab-5":
+    if tab == "tab-6":
+        return dbc.Row(
+            [
+                dbc.Col(
+                    html.Div([tab6_panels]),
+                    style={"padding-right": "5em"},
+                    className="output-container",
+                ),
+            ]
+        )
+    elif tab == "tab-5":
         return dbc.Row(
             [
                 dbc.Col(
@@ -140,3 +157,5 @@ def render_content(tab):
 if __name__ == '__main__':
     app.run_server()
     #app.run_server(debug=True)
+
+    
