@@ -506,7 +506,7 @@ def update_hero_dmg(n_clicks, level, bought, weapon, dungeon, special1):
         if bought == "yes":
             weapon_mult = 4 * weapon
         else:
-            weapon_mult = 1
+            weapon_mult = 0
             
         if level <= 10:
             x = ((level - 1) * 11) + 25
@@ -871,7 +871,7 @@ def update_monster_dmg(n_clicks, result, hero_lvl, bought, weapon, dungeon, spec
         if bought == "yes":
             weapon_mult = 4 * weapon
         else:
-            weapon_mult = 1
+            weapon_mult = 0
             
         if hero_lvl <= 10:
             x = ((hero_lvl - 1) * 11) + 25
@@ -935,7 +935,7 @@ def update_monster_dmg(n_clicks, result, hero_lvl, bought, weapon, dungeon, spec
             base_rp = x["RP"].unique()
             life_lvl = base_life + ((0.75 * base_life) * (monster_lvl - 1))
             dmg_lvl = base_dmg + ((0.25 * base_dmg) * (monster_lvl - 1))
-            rp_prog = [1, 1.5, 2, 2.4, 2.8, 3.1, 3.35, 3.6, 3.85, 4.1, 4.3, 4.5, 4.7,
+            rp_prog = [1, 1.6, 2.1, 2.5, 2.8, 3.1, 3.35, 3.6, 3.85, 4.1, 4.3, 4.5, 4.7,
                        4.9, 5.1, 5.25, 5.4, 5.55, 5.7, 5.85, 6, 6.1, 6.2, 6.3, 6.4, 
                        6.4, 6.4, 6.4, 6.4, 6.4]
             rp_lvl = base_rp * rp_prog[monster_lvl - 1]

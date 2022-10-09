@@ -507,14 +507,17 @@ def calculate_item_loot(n_clicks, dungeon, shop, item, level, tips1, tips2, tips
             error_message = f"Missing inputs: {', '.join(missing_inputs)}"
             return dcc.Markdown(error_message, style={"color": "red"})
         
-        lvl_prog = [1, 1.5, 2, 2.4, 2.8, 3.1, 3.35, 3.6, 3.85, 4.1, 4.3, 4.5, 4.7, 
-                    4.9, 5.1, 5.25, 5.4, 5.55, 5.7, 5.85, 6, 6.1, 6.2, 6.3, 6.4, 
-                    6.5, 6.6, 6.7, 6.8, 6.9]
+        price_lvl_prog = [1, 1.5, 2, 2.4, 2.8, 3.1, 3.35, 3.6, 3.85, 4.1, 4.3, 4.5, 4.7, 
+                          4.9, 5.1, 5.25, 5.4, 5.55, 5.7, 5.85, 6, 6.1, 6.2, 6.3, 6.4, 
+                          6.5, 6.6, 6.7, 6.8, 6.9]
+        rp_lvl_prog = [1, 1.6, 2.1, 2.5, 2.8, 3.1, 3.35, 3.6, 3.85, 4.1, 4.3, 4.5, 4.7, 
+                       4.9, 5.1, 5.25, 5.4, 5.55, 5.7, 5.85, 6, 6.1, 6.2, 6.3, 6.4, 
+                       6.5, 6.6, 6.7, 6.8, 6.9]
         
         if shop == "loot":
             x = df.query("Item == @item")
             base_rp = x["Base"].unique()
-            rp_lvl = base_rp * lvl_prog[level - 1]
+            rp_lvl = base_rp * rp_lvl_prog[level - 1]
             
             special_mult = (100 + special) / 100
             dungeon_mult = 1
@@ -533,7 +536,7 @@ def calculate_item_loot(n_clicks, dungeon, shop, item, level, tips1, tips2, tips
         else:    
             x = df.query("Item == @item")
             base_price = x["Base"].unique()
-            price_lvl = base_price * lvl_prog[level - 1]
+            price_lvl = base_price * price_lvl_prog[level - 1]
             
             tips = (100 + tips1 + tips2 + tips3) / 100
             statue_mult = item_statue / 100
